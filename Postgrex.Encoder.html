@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Postgrex.Encoder</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Postgrex.Encoder
+        
+          <small>behaviour</small>
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Behaviour for custom encoding of elixir values to postgres&#39; binary format.</p>
+
+<h2>Example</h2>
+
+<pre><code>defmodule MyEncoder do
+  use Postgrex.Encoder
+
+  # Encoder of a direction enum
+  def post_encode(:direction, _sender, _oid, param) do
+    case param do
+      :up -&gt; &quot;up&quot;
+      :down -&gt; &quot;down&quot;
+    end
+  end
+end
+</code></pre>
+
+        </div>
+      
+
+      <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
+/lib/postgrex/behaviours.ex#L1" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+
+      
+        <h2 id="callbacks_summary">Callbacks summary</h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#pre_encode/4">pre_encode(type :: atom(), sender :: atom(), oid :: integer(), param :: term())</a></td>
+  
+    <td class="summary_synopsis"><p>Converts an elixir value to another elixir vaulue. Useful when you have a
+custom elixir value that can be converted to a value Postgrex can encode.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#post_encode/5">post_encode(type :: atom(), sender :: atom(), oid :: integer(), param :: term(), encoded :: binary() | nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Encodes an elixir value to postgres&#39; binary format. Also receives the binary
+as Postgrex encoded it in encoded or <code>nil</code> if Postgrex could not encode it.</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+
+      
+
+      
+        <div id="callbacks_details" class="details_list">
+          <h2>Callbacks</h2>
+          <div class="detail">
+  <p class="signature" id="pre_encode/4">
+    <strong>pre_encode(type :: atom(), sender :: atom(), oid :: integer(), param :: term())</strong>
+  </p>
+  
+  <div class="docstring"><p>Converts an elixir value to another elixir vaulue. Useful when you have a
+custom elixir value that can be converted to a value Postgrex can encode.</p>
+</div>
+  
+    <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
+/lib/postgrex/behaviours.ex#L26" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="post_encode/5">
+    <strong>post_encode(type :: atom(), sender :: atom(), oid :: integer(), param :: term(), encoded :: binary() | nil)</strong>
+  </p>
+  
+  <div class="docstring"><p>Encodes an elixir value to postgres&#39; binary format. Also receives the binary
+as Postgrex encoded it in encoded or <code>nil</code> if Postgrex could not encode it.</p>
+</div>
+  
+    <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
+/lib/postgrex/behaviours.ex#L32" target="_blank" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+    </div>
+  </body>
+</html>
