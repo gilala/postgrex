@@ -32,7 +32,7 @@
         </div>
       
 
-      <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
+      <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
 /lib/postgrex/connection.ex#L1" target="_blank" class="view_source">Source</a>
 
       
@@ -43,16 +43,34 @@
           <tr>
   <td class="summary_signature"><a href="#begin/1">begin(pid)</a></td>
   
-    <td class="summary_synopsis"><p>Starts a transaction. Transactions can be nested with the help of savepoints.
-A transaction won&#39;t end until a <a href="#rollback/1"><code>rollback/1</code></a> or <a href="#commit/1"><code>commit/1</code></a> have been issued
-for every <a href="#begin/1"><code>begin/1</code></a>.</p>
+    <td class="summary_synopsis"><p>Starts a transaction. Returns <code>:ok</code> or <code>{ :error, Postgrex.Error[] }</code> if an
+error occurred. Transactions can be nested with the help of savepoints. A
+transaction won&#39;t end until a <a href="#rollback/1"><code>rollback/1</code></a> or <a href="#commit/1"><code>commit/1</code></a> have been issued for
+every <a href="#begin/1"><code>begin/1</code></a>.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#begin!/1">begin!(pid)</a></td>
+  
+    <td class="summary_synopsis"><p>Starts a transaction. Returns <code>:ok</code> if it was successful or raises
+<code>Postgrex.Error</code> if an error occurred. See <a href="#begin/1"><code>begin/1</code></a>.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#commit/1">commit(pid)</a></td>
   
-    <td class="summary_synopsis"><p>Commits a transaction. See <a href="#begin/1"><code>begin/1</code></a> for more information.</p>
+    <td class="summary_synopsis"><p>Commits a transaction. Returns <code>:ok</code> or <code>{ :error, Postgrex.Error[] }</code> if an
+error occurred. See <a href="#begin/1"><code>begin/1</code></a> for more information.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#commit!/1">commit!(pid)</a></td>
+  
+    <td class="summary_synopsis"><p>Commits a transaction. Returns <code>:ok</code> if it was successful or raises
+<code>Postgrex.Error</code> if an error occurred. See <a href="#commit/1"><code>commit/1</code></a>.</p>
 </td>
   
 </tr>
@@ -76,17 +94,36 @@ connection error <code>Postgrex.Error</code> will be raised.</p>
 <tr>
   <td class="summary_signature"><a href="#query/3">query(pid, statement, params // [])</a></td>
   
-    <td class="summary_synopsis"><p>Runs an (extended) query and returns the result. Parameters can be set in the
-query as <code>$1</code> embedded in the query string. Parameters are given as a list of
-elixir values. See the README for information on how Postgrex encodes and
-decodes elixir values by default. See <code>Postgrex.Result</code> for the result data.</p>
+    <td class="summary_synopsis"><p>Runs an (extended) query and returns the result as <code>{ :ok, Postgrex.Result[]
+}</code> or <code>{ :error, Postgrex.Error[] }</code> if there was an error. Parameters can be
+set in the query as <code>$1</code> embedded in the query string. Parameters are given as
+a list of elixir values. See the README for information on how Postgrex
+encodes and decodes elixir values by default. See <code>Postgrex.Result</code> for the
+result data.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#query!/3">query!(pid, statement, params // [])</a></td>
+  
+    <td class="summary_synopsis"><p>Runs an (extended) query and returns the result or raises <code>Postgrex.Error</code> if
+there was an error. See <a href="#query/3"><code>query/3</code></a>.</p>
 </td>
   
 </tr>
 <tr>
   <td class="summary_signature"><a href="#rollback/1">rollback(pid)</a></td>
   
-    <td class="summary_synopsis"><p>Rolls back a transaction. See <a href="#begin/1"><code>begin/1</code></a> for more information.</p>
+    <td class="summary_synopsis"><p>Rolls back a transaction. Returns <code>:ok</code> or <code>{ :error, Postgrex.Error[] }</code> if
+an error occurred. See <a href="#begin/1"><code>begin/1</code></a> for more information.</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rollback!/1">rollback!(pid)</a></td>
+  
+    <td class="summary_synopsis"><p>Rolls back a transaction. Returns <code>:ok</code> if it was successful or raises
+<code>Postgrex.Error</code> if an error occurred. See <a href="#rollback/1"><code>rollback/1</code></a>.</p>
 </td>
   
 </tr>
@@ -129,27 +166,51 @@ decodes elixir values by default. See <code>Postgrex.Result</code> for the resul
       
     </ul>
   
-  <div class="docstring"><p>Starts a transaction. Transactions can be nested with the help of savepoints.
-A transaction won&#39;t end until a <a href="#rollback/1"><code>rollback/1</code></a> or <a href="#commit/1"><code>commit/1</code></a> have been issued
-for every <a href="#begin/1"><code>begin/1</code></a>.</p>
+  <div class="docstring"><p>Starts a transaction. Returns <code>:ok</code> or <code>{ :error, Postgrex.Error[] }</code> if an
+error occurred. Transactions can be nested with the help of savepoints. A
+transaction won&#39;t end until a <a href="#rollback/1"><code>rollback/1</code></a> or <a href="#commit/1"><code>commit/1</code></a> have been issued for
+every <a href="#begin/1"><code>begin/1</code></a>.</p>
 
 <h2>Example</h2>
 
 <pre><code># Transaction begun
 Postgrex.Connection.begin(pid)
 Postgrex.Connection.query(pid, &quot;INSERT INTO comments (text) VALUES (&#39;first&#39;)&quot;)
+
 # Nested subtransaction begun
 Postgrex.Connection.begin(pid)
 Postgrex.Connection.query(pid, &quot;INSERT INTO comments (text) VALUES (&#39;second&#39;)&quot;)
+
 # Subtransaction rolled back
 Postgrex.Connection.rollback(pid)
-# Only the first commenten will be commited
+
+# Only the first comment will be commited because the second was rolled back
 Postgrex.Connection.commit(pid)
 </code></pre>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
-/lib/postgrex/connection.ex#L97" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L127" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="begin!/1">
+    <strong>begin!(pid)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>begin!(pid) :: :ok | no_return</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Starts a transaction. Returns <code>:ok</code> if it was successful or raises
+<code>Postgrex.Error</code> if an error occurred. See <a href="#begin/1"><code>begin/1</code></a>.</p>
+</div>
+  
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L139" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -164,11 +225,32 @@ Postgrex.Connection.commit(pid)
       
     </ul>
   
-  <div class="docstring"><p>Commits a transaction. See <a href="#begin/1"><code>begin/1</code></a> for more information.</p>
+  <div class="docstring"><p>Commits a transaction. Returns <code>:ok</code> or <code>{ :error, Postgrex.Error[] }</code> if an
+error occurred. See <a href="#begin/1"><code>begin/1</code></a> for more information.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
-/lib/postgrex/connection.ex#L119" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L177" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="commit!/1">
+    <strong>commit!(pid)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>commit!(pid) :: :ok | no_return</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Commits a transaction. Returns <code>:ok</code> if it was successful or raises
+<code>Postgrex.Error</code> if an error occurred. See <a href="#commit/1"><code>commit/1</code></a>.</p>
+</div>
+  
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L190" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -192,8 +274,8 @@ connection error <code>Postgrex.Error</code> will be raised.</p>
 <a href="#rollback/1"><code>rollback/1</code></a>.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
-/lib/postgrex/connection.ex#L136" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L208" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -211,8 +293,8 @@ connection error <code>Postgrex.Error</code> will be raised.</p>
   <div class="docstring"><p>Returns a cached list dict of connection parameters.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
-/lib/postgrex/connection.ex#L75" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L100" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -227,14 +309,36 @@ connection error <code>Postgrex.Error</code> will be raised.</p>
       
     </ul>
   
-  <div class="docstring"><p>Runs an (extended) query and returns the result. Parameters can be set in the
-query as <code>$1</code> embedded in the query string. Parameters are given as a list of
-elixir values. See the README for information on how Postgrex encodes and
-decodes elixir values by default. See <code>Postgrex.Result</code> for the result data.</p>
+  <div class="docstring"><p>Runs an (extended) query and returns the result as <code>{ :ok, Postgrex.Result[]
+}</code> or <code>{ :error, Postgrex.Error[] }</code> if there was an error. Parameters can be
+set in the query as <code>$1</code> embedded in the query string. Parameters are given as
+a list of elixir values. See the README for information on how Postgrex
+encodes and decodes elixir values by default. See <code>Postgrex.Result</code> for the
+result data.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
-/lib/postgrex/connection.ex#L64" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L76" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="query!/3">
+    <strong>query!(pid, statement, params // [])</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>query!(pid, <a href="http://elixir-lang.org/docs/master/String.html#t:t/0">String.t</a>, []) :: <a href="Postgrex.Result.html#t:t/0">Postgrex.Result.t</a> | no_return</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Runs an (extended) query and returns the result or raises <code>Postgrex.Error</code> if
+there was an error. See <a href="#query/3"><code>query/3</code></a>.</p>
+</div>
+  
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L88" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -249,11 +353,32 @@ decodes elixir values by default. See <code>Postgrex.Result</code> for the resul
       
     </ul>
   
-  <div class="docstring"><p>Rolls back a transaction. See <a href="#begin/1"><code>begin/1</code></a> for more information.</p>
+  <div class="docstring"><p>Rolls back a transaction. Returns <code>:ok</code> or <code>{ :error, Postgrex.Error[] }</code> if
+an error occurred. See <a href="#begin/1"><code>begin/1</code></a> for more information.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
-/lib/postgrex/connection.ex#L108" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L151" target="_blank" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <p class="signature" id="rollback!/1">
+    <strong>rollback!(pid)</strong>
+  </p>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>rollback!(pid) :: :ok | no_return</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Rolls back a transaction. Returns <code>:ok</code> if it was successful or raises
+<code>Postgrex.Error</code> if an error occurred. See <a href="#rollback/1"><code>rollback/1</code></a>.</p>
+</div>
+  
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L164" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -273,18 +398,29 @@ decodes elixir values by default. See <code>Postgrex.Result</code> for the resul
 <h2>Options</h2>
 
 <ul>
-<li><code>:hostname</code> - Postgres&#39; server hostname (required);</li>
-<li><code>:port</code> - Postgres&#39; server port (default: 5432);</li>
-<li><code>:username</code> - Postgres username (required);</li>
-<li><code>:password</code> - Postgres&#39; user password;</li>
-<li><code>:encoders</code> - List of encoders, see <code>Postgrex.Encoder</code>;</li>
-<li><code>:decoders</code> - List of decoders, see <code>Postgrex.Decoder</code>;</li>
+<li><code>:hostname</code> - Server hostname (required);</li>
+<li><code>:port</code> - Server port (default: 5432);</li>
+<li><code>:username</code> - Username (required);</li>
+<li><code>:password</code> - User password;</li>
+<li><code>:encoder</code> - Custom encoder function;</li>
+<li><code>:decoder</code> - Custom decoder function;</li>
+<li><code>:formatter</code> - Function deciding the format for a type;</li>
 <li><code>:parameters</code> - Keyword list of connection parameters;</li>
 </ul>
+
+<h2>Function signatures</h2>
+
+<pre><code>@spec encoder(info :: TypeInfo.t, default :: fun, param :: term) ::
+      { :binary | :text, binary }
+@spec decoder(info :: TypeInfo.t, default :: fun, bin :: binary) ::
+      term
+@spec decode_formatter(info :: TypeInfo.t) ::
+      :binary | :text
+</code></pre>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
-/lib/postgrex/connection.ex#L37" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L47" target="_blank" class="view_source">Source</a>
   
 </div>
 <div class="detail">
@@ -302,8 +438,8 @@ decodes elixir values by default. See <code>Postgrex.Result</code> for the resul
   <div class="docstring"><p>Stop the process and disconnect.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/d5bb9e690efd2d9d009f2c003015cb61860c50e7
-/lib/postgrex/connection.ex#L53" target="_blank" class="view_source">Source</a>
+    <a href="https://github.com/ericmj/postgrex/blob/ec8194b1273bbd69c4b43933c7d40d5f04425675
+/lib/postgrex/connection.ex#L63" target="_blank" class="view_source">Source</a>
   
 </div>
 

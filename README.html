@@ -37,13 +37,13 @@ end
 
 <p>After you are done, run <code>mix deps.get</code> in your shell to fetch and compile Postgrex. Start an interactive Elixir shell with <code>iex -S mix</code>.</p>
 
-<pre><code class="elixir">iex(1)&gt; { :ok, pid } = Postgrex.Connection.start_link([hostname: &quot;localhost&quot;, username: &quot;postgres&quot;, password: &quot;postgres&quot;, database: &quot;postgres&quot;])
+<pre><code class="iex">iex&gt; { :ok, pid } = Postgrex.Connection.start_link([hostname: &quot;localhost&quot;, username: &quot;postgres&quot;, password: &quot;postgres&quot;, database: &quot;postgres&quot;])
 {:ok, #PID&lt;0.69.0&gt;}
-iex(2)&gt; Postgrex.Connection.query(pid, &quot;SELECT user_id, text FROM comments&quot;)
+iex&gt; Postgrex.Connection.query(pid, &quot;SELECT user_id, text FROM comments&quot;)
 {:ok,
  Postgrex.Result[command: :select, empty?: false, columns: [&quot;user_id&quot;, &quot;text&quot;],
   rows: [{3,&quot;hey&quot;},{4,&quot;there&quot;}], size: 2]}
-iex(3)&gt; Postgrex.Connection.query(pid, &quot;INSERT INTO comments (user_id, text) VALUES (10, &#39;heya&#39;)&quot;)
+iex&gt; Postgrex.Connection.query(pid, &quot;INSERT INTO comments (user_id, text) VALUES (10, &#39;heya&#39;)&quot;)
 {:ok,
  Postgrex.Result[command: :insert, columns: nil, rows: nil, num_rows: 1]}
 
@@ -60,30 +60,46 @@ iex(3)&gt; Postgrex.Connection.query(pid, &quot;INSERT INTO comments (user_id, t
 
 <h2>Data representation</h2>
 
-<pre class="codeblock"><code>PostgreSQL     Elixir
-----------     ------
-NULL           nil
-bool           true | false
-char           &quot;é&quot;
-int            42
-float          42.0
-text           &quot;eric&quot;
-bytea          &lt;&lt; 42 &gt;&gt;
-date           { 2013, 10, 12 }
-time           { 0, 37, 14 }
-timestamp(tz)  { { 2013, 10, 12 }, { 0, 37, 14 } }
-interval       { 14, 40, 10920 } *
-array          [ 1, 2, 3 ]
+<pre class="codeblock"><code>PostgreSQL      Elixir
+----------      ------
+NULL            nil
+bool            true | false
+char            &quot;é&quot;
+int             42
+float           42.0
+text            &quot;eric&quot;
+bytea           &lt;&lt; 42 &gt;&gt;
+numeric         42 | 42.5 *
+date            { 2013, 10, 12 }
+time            { 0, 37, 14 }
+timestamp(tz)   { { 2013, 10, 12 }, { 0, 37, 14 } }
+interval        { 14, 40, 10920 } **
+array           [ 1, 2, 3 ]
+composite type  { 42, &quot;title&quot;, &quot;content&quot; }
 </code></pre>
 
-<p>* interval is encoded as <code>{ months, days, seconds }</code></p>
+<p>* numeric is only decoded as float when it is a non-integer value, this is to not lose precision when it is an integer value (elixir&#39;s integers are of arbitrary precision). NOTE: floating point encoding and decoding is lossy, use with caution!
+** interval is encoded as <code>{ months, days, seconds }</code>.</p>
+
+<h2>Custom encoder and decoder example</h2>
+
+<p>Encoding and decoding from and to JSON:</p>
+
+<pre><code class="elixir">def decoder(:json, _sender, _oid, _default, binary) do
+  JSON.decode(binary)
+end
+
+def encoder(:json, _sender, _oid, _default, value) do
+  { :text, JSON.encode(param) }
+end
+</code></pre>
 
 <h2>TODO</h2>
 
 <ul>
 <li>Callbacks for asynchronous events</li>
-<li>Encoding/decoding of composite types, numeric, money</li>
 <li>Text format decoding of arrays of unknown types</li>
+<li>Lossless numeric encoding/decoding with future arbitrary precision decimal type</li>
 </ul>
 
 <h2>License</h2>
