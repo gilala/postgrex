@@ -22,9 +22,11 @@
     <div id="content">
       <h1>Postgrex</h1>
 
+<p><a href="https://travis-ci.org/ericmj/postgrex"><img src="https://travis-ci.org/ericmj/postgrex.png?branch=master" alt="Build Status"></a></p>
+
 <p>PostgreSQL driver for Elixir.</p>
 
-<p><a href="https://travis-ci.org/ericmj/postgrex"><img src="https://travis-ci.org/ericmj/postgrex.png?branch=master" alt="Build Status"></a></p>
+<p>Documentation: <a href="http://ericmj.github.io/postgrex">http://ericmj.github.io/postgrex</a></p>
 
 <h2>Usage</h2>
 
@@ -78,19 +80,36 @@ array           [ 1, 2, 3 ]
 composite type  { 42, &quot;title&quot;, &quot;content&quot; }
 </code></pre>
 
-<p>* numeric is only decoded as float when it is a non-integer value, this is to not lose precision when it is an integer value (elixir&#39;s integers are of arbitrary precision). NOTE: floating point encoding and decoding is lossy, use with caution!
-** interval is encoded as <code>{ months, days, seconds }</code>.</p>
+<p>* numeric is only decoded as float when it is a non-integer value, this is to not lose precision when it is an integer value (elixir&#39;s integers are of arbitrary precision). NOTE: floating point encoding and decoding is lossy, use with caution!</p>
+
+<p>** interval is encoded as <code>{ months, days, seconds }</code>.</p>
 
 <h2>Custom encoder and decoder example</h2>
 
 <p>Encoding and decoding from and to JSON:</p>
 
-<pre><code class="elixir">def decoder(:json, _sender, _oid, _default, binary) do
+<pre><code class="elixir">def decoder(TypeInfo[sender: &quot;json&quot;], _format, _default, binary) do
   JSON.decode(binary)
 end
 
-def encoder(:json, _sender, _oid, _default, value) do
-  { :text, JSON.encode(param) }
+def decoder(TypeInfo[], _format, default, binary) do
+  default.(binary)
+end
+
+def encoder(TypeInfo[sender: &quot;json&quot;], _default, value) do
+  JSON.encode(value)
+end
+
+def encoder(TypeInfo[], default, value) do
+  default.(value)
+end
+
+def formatter(TypeInfo[sender: &quot;json&quot;]) do
+  :text
+end
+
+def formatter(TypeInfo[]) do
+  nil
 end
 </code></pre>
 
@@ -98,9 +117,25 @@ end
 
 <ul>
 <li>Callbacks for asynchronous events</li>
-<li>Text format decoding of arrays of unknown types</li>
 <li>Lossless numeric encoding/decoding with future arbitrary precision decimal type</li>
 </ul>
+
+<h2>Contributing</h2>
+
+<p>To contribute you need to compile Postgrex from source and test it:</p>
+
+<pre class="codeblock"><code>$ git clone https://github.com/ericmj/postgrex.git
+$ cd postgrex
+$ mix test
+</code></pre>
+
+<p>The tests requires some modifications to your <a href="http://www.postgresql.org/docs/9.3/static/auth-pg-hba-conf.html">hba file</a>. The path to it can be found by running <code>$ psql -U postgres -c &quot;SHOW hba_file&quot;</code> in your shell. Put the following above all other configurations (so that they override):</p>
+
+<pre class="codeblock"><code>host    all             postgrex_md5_pw         127.0.0.1/32    md5
+host    all             postgrex_cleartext_pw   127.0.0.1/32    password
+</code></pre>
+
+<p>The server needs to be restarted for the changes to take effect. Additionally a Postgres user with username <code>postgres</code> and password <code>postgres</code> or with trust authentication is required.</p>
 
 <h2>License</h2>
 
