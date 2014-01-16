@@ -71,7 +71,7 @@ int             42
 float           42.0
 text            &quot;eric&quot;
 bytea           &lt;&lt; 42 &gt;&gt;
-numeric         42 | 42.5 *
+numeric         #Decimal&lt;42.0&gt; *
 date            { 2013, 10, 12 }
 time            { 0, 37, 14 }
 timestamp(tz)   { { 2013, 10, 12 }, { 0, 37, 14 } }
@@ -80,7 +80,7 @@ array           [ 1, 2, 3 ]
 composite type  { 42, &quot;title&quot;, &quot;content&quot; }
 </code></pre>
 
-<p>* numeric is only decoded as float when it is a non-integer value, this is to not lose precision when it is an integer value (elixir&#39;s integers are of arbitrary precision). NOTE: floating point encoding and decoding is lossy, use with caution!</p>
+<p>* <a href="http://github.com/ericmj/decimal">Decimal</a></p>
 
 <p>** interval is encoded as <code>{ months, days, seconds }</code>.</p>
 
@@ -117,7 +117,6 @@ end
 
 <ul>
 <li>Callbacks for asynchronous events</li>
-<li>Lossless numeric encoding/decoding with future arbitrary precision decimal type</li>
 </ul>
 
 <h2>Contributing</h2>
