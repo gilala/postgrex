@@ -20,20 +20,16 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">Postgrex v0.4.2 &rarr; <a href="overview.html">Overview</a> &rarr; Postgrex &rarr; <a href="Postgrex.Result.html">Result</a></div>
+      <div class="breadcrumbs">Postgrex v0.5.0 &rarr; <a href="overview.html">Overview</a> &rarr; Postgrex &rarr; <a href="Postgrex.Result.html">Result</a></div>
 
       <h1>
         Postgrex.Result
-        
-          <small>record</small>
         
       </h1>
 
       
 
       <ul class="summary_links">
-        
-          <li><a href="#fields_summary">Fields</a></li>
         
         
         
@@ -46,7 +42,7 @@
 
       
         <div id="moduledoc" class="docstring">
-          <p>Result record returned from any successful query. Its fields are:</p>
+          <p>Result struct returned from any successful query. Its fields are:</p>
 
 <ul>
 <li><code>command</code> - An atom of the query command, for example: <code>:select</code> or
@@ -61,39 +57,10 @@
       
 
       
-        <a href="https://github.com/ericmj/postgrex/blob/624619aab21ced8bdcb5cf7da9c4d90ff9a9cd10
-/lib/postgrex/records.ex#L1" target="_blank" class="view_source">Source</a>
+        <a href="https://github.com/ericmj/postgrex/blob/9f59a3d7f87820c5adf31a24076c2a4125d7ae49
+/lib/postgrex/structs.ex#L1" target="_blank" class="view_source">Source</a>
       
 
-      
-        <h2 id="fields_summary">Fields <small>(and defaults)</small></h2>
-        <ul class="summary">
-          
-            <li>
-              <span class="summary_signature">
-                <strong>command:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>columns:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>rows:</strong> nil
-              </span>
-            </li>
-          
-            <li>
-              <span class="summary_signature">
-                <strong>num_rows:</strong> nil
-              </span>
-            </li>
-          
-        </ul>
       
 
       
@@ -103,13 +70,7 @@
           <h2>Types <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></h2>
           <div class="type_detail">
   <p class="typespec" id="t:t/0">
-    <a href="#t:t/0">t</a> :: {Postgrex.Result, atom, [<a href="http://elixir-lang.org/docs/master/String.html#t:t/0">String.t</a>] | nil, [tuple] | nil, integer}
-  </p>
-  
-</div>
-<div class="type_detail">
-  <p class="typespec" id="t:options/0">
-    <a href="#t:options/0">options</a> :: [command: atom, columns: [<a href="http://elixir-lang.org/docs/master/String.html#t:t/0">String.t</a>] | nil, rows: [tuple] | nil, num_rows: integer] | [{<a href="http://elixir-lang.org/docs/master/String.html#t:t/0">String.t</a>, term}]
+    <a href="#t:t/0">t</a> :: %Postgrex.Result{command: atom, columns: [<a href="http://elixir-lang.org/docs/master/String.html#t:t/0">String.t</a>] | nil, rows: [tuple] | nil, num_rows: integer}
   </p>
   
 </div>
