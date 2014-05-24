@@ -60,20 +60,9 @@
         <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
         <table class="summary">
           <tr>
-  <td class="summary_signature"><a href="#begin!/2">begin!(pid, timeout \\ :infinity)</a></td>
+  <td class="summary_signature"><a href="#start_link/1">start_link(opts)</a></td>
   
-    <td class="summary_synopsis"><p>Starts a transaction. Returns <code>:ok</code> if it was successful or raises
-<a href="Postgrex.Error.html"><code>Postgrex.Error</code></a> if an error occurred. See <code>begin/1</code></p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#begin/2">begin(pid, timeout \\ :infinity)</a></td>
-  
-    <td class="summary_synopsis"><p>Starts a transaction. Returns <code>:ok</code> or <code>{:error, %Postgrex.Error{}}</code> if an
-error occurred. Transactions can be nested with the help of savepoints. A
-transaction won&#39;t end until a <code>rollback/1</code> or <code>commit/1</code> have been issued for
-every <code>begin/1</code></p>
+    <td class="summary_synopsis"><p>Start the connection process and connect to postgres</p>
 </td>
   
 </tr>
@@ -94,39 +83,9 @@ error occurred. See <code>begin/1</code> for more information</p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#in_transaction/3">in_transaction(pid, timeout \\ :infinity, fun)</a></td>
-  
-    <td class="summary_synopsis"><p>Helper for creating reliable transactions. If an error is raised in the given
-function the transaction is rolled back, otherwise it is commited. A
-transaction can be cancelled with <code>throw :postgrex_rollback</code>. If there is a
-connection error <a href="Postgrex.Error.html"><code>Postgrex.Error</code></a> will be raised</p>
-</td>
-  
-</tr>
-<tr>
   <td class="summary_signature"><a href="#parameters/2">parameters(pid, timeout \\ :infinity)</a></td>
   
     <td class="summary_synopsis"><p>Returns a cached map of connection parameters</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#query!/4">query!(pid, statement, params \\ [], timeout \\ :infinity)</a></td>
-  
-    <td class="summary_synopsis"><p>Runs an (extended) query and returns the result or raises <a href="Postgrex.Error.html"><code>Postgrex.Error</code></a> if
-there was an error. See <code>query/3</code></p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#query/4">query(pid, statement, params \\ [], timeout \\ :infinity)</a></td>
-  
-    <td class="summary_synopsis"><p>Runs an (extended) query and returns the result as <code>{:ok, %Postgrex.Result{}}</code>
-or <code>{:error, %Postgrex.Error{}}</code> if there was an error. Parameters can be
-set in the query as <code>$1</code> embedded in the query string. Parameters are given as
-a list of elixir values. See the README for information on how Postgrex
-encodes and decodes elixir values by default. See <a href="Postgrex.Result.html"><code>Postgrex.Result</code></a> for the
-result data</p>
 </td>
   
 </tr>
@@ -147,9 +106,20 @@ an error occurred. See <code>begin/1</code> for more information</p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#start_link/1">start_link(opts)</a></td>
+  <td class="summary_signature"><a href="#begin!/2">begin!(pid, timeout \\ :infinity)</a></td>
   
-    <td class="summary_synopsis"><p>Start the connection process and connect to postgres</p>
+    <td class="summary_synopsis"><p>Starts a transaction. Returns <code>:ok</code> if it was successful or raises
+<a href="Postgrex.Error.html"><code>Postgrex.Error</code></a> if an error occurred. See <code>begin/1</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#begin/2">begin(pid, timeout \\ :infinity)</a></td>
+  
+    <td class="summary_synopsis"><p>Starts a transaction. Returns <code>:ok</code> or <code>{:error, %Postgrex.Error{}}</code> if an
+error occurred. Transactions can be nested with the help of savepoints. A
+transaction won&#39;t end until a <code>rollback/1</code> or <code>commit/1</code> have been issued for
+every <code>begin/1</code></p>
 </td>
   
 </tr>
@@ -157,6 +127,36 @@ an error occurred. See <code>begin/1</code> for more information</p>
   <td class="summary_signature"><a href="#stop/2">stop(pid, timeout \\ :infinity)</a></td>
   
     <td class="summary_synopsis"><p>Stop the process and disconnect</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#in_transaction/3">in_transaction(pid, timeout \\ :infinity, fun)</a></td>
+  
+    <td class="summary_synopsis"><p>Helper for creating reliable transactions. If an error is raised in the given
+function the transaction is rolled back, otherwise it is commited. A
+transaction can be cancelled with <code>throw :postgrex_rollback</code>. If there is a
+connection error <a href="Postgrex.Error.html"><code>Postgrex.Error</code></a> will be raised</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#query/4">query(pid, statement, params \\ [], timeout \\ :infinity)</a></td>
+  
+    <td class="summary_synopsis"><p>Runs an (extended) query and returns the result as <code>{:ok, %Postgrex.Result{}}</code>
+or <code>{:error, %Postgrex.Error{}}</code> if there was an error. Parameters can be
+set in the query as <code>$1</code> embedded in the query string. Parameters are given as
+a list of elixir values. See the README for information on how Postgrex
+encodes and decodes elixir values by default. See <a href="Postgrex.Result.html"><code>Postgrex.Result</code></a> for the
+result data</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#query!/4">query!(pid, statement, params \\ [], timeout \\ :infinity)</a></td>
+  
+    <td class="summary_synopsis"><p>Runs an (extended) query and returns the result or raises <a href="Postgrex.Error.html"><code>Postgrex.Error</code></a> if
+there was an error. See <code>query/3</code></p>
 </td>
   
 </tr>
