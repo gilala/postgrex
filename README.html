@@ -20,37 +20,39 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">Postgrex v0.5.1 &rarr; <a href="readme.html">README</a></div>
+      <div class="breadcrumbs">Postgrex v0.5.2 &rarr; <a href="readme.html">README</a></div>
       <h1>Postgrex</h1>
 
 <p><a href="https://travis-ci.org/ericmj/postgrex"><img src="https://travis-ci.org/ericmj/postgrex.png?branch=master" alt="Build Status"></a></p>
 
 <p>PostgreSQL driver for Elixir.</p>
 
-<p>Documentation: <a href="http://ericmj.github.io/postgrex">http://ericmj.github.io/postgrex</a></p>
+<p>Documentation: http://ericmj.github.io/postgrex</p>
 
 <h2>Usage</h2>
 
 <p>Add Postgrex as a dependency in your <code>mix.exs</code> file.</p>
 
-<pre><code class="elixir">def deps do
+<p><code>elixir
+def deps do
   [ { :postgrex, github: &quot;ericmj/postgrex&quot; } ]
 end
-</code></pre>
+</code></p>
 
 <p>After you are done, run <code>mix deps.get</code> in your shell to fetch and compile Postgrex. Start an interactive Elixir shell with <code>iex -S mix</code>.</p>
 
-<pre><code class="iex">iex&gt; { :ok, pid } = Postgrex.Connection.start_link([hostname: &quot;localhost&quot;, username: &quot;postgres&quot;, password: &quot;postgres&quot;, database: &quot;postgres&quot;])
-{:ok, #PID&lt;0.69.0&gt;}
-iex&gt; Postgrex.Connection.query(pid, &quot;SELECT user_id, text FROM comments&quot;)
+<p>```iex
+iex&gt; { :ok, pid } = Postgrex.Connection.start<em>link([hostname: &quot;localhost&quot;, username: &quot;postgres&quot;, password: &quot;postgres&quot;, database: &quot;postgres&quot;])
+{:ok, #PID<0.69.0>}
+iex&gt; Postgrex.Connection.query(pid, &quot;SELECT user</em>id, text FROM comments&quot;)
 {:ok,
- Postgrex.Result[command: :select, empty?: false, columns: [&quot;user_id&quot;, &quot;text&quot;],
+ Postgrex.Result[command: :select, empty?: false, columns: [&quot;user<em>id&quot;, &quot;text&quot;],
   rows: [{3,&quot;hey&quot;},{4,&quot;there&quot;}], size: 2]}
-iex&gt; Postgrex.Connection.query(pid, &quot;INSERT INTO comments (user_id, text) VALUES (10, &#39;heya&#39;)&quot;)
+iex&gt; Postgrex.Connection.query(pid, &quot;INSERT INTO comments (user</em>id, text) VALUES (10, &#39;heya&#39;)&quot;)
 {:ok,
- Postgrex.Result[command: :insert, columns: nil, rows: nil, num_rows: 1]}
+ Postgrex.Result[command: :insert, columns: nil, rows: nil, num_rows: 1]}</p>
 
-</code></pre>
+<p>```</p>
 
 <h2>Features</h2>
 
@@ -89,30 +91,31 @@ composite type  { 42, &quot;title&quot;, &quot;content&quot; }
 
 <p>Encoding and decoding from and to JSON:</p>
 
-<pre><code class="elixir">def decoder(TypeInfo[sender: &quot;json&quot;], _format, _default, binary) do
+<p>```elixir
+def decoder(TypeInfo[sender: &quot;json&quot;], _format, _default, binary) do
   JSON.decode(binary)
-end
+end</p>
 
-def decoder(TypeInfo[], _format, default, binary) do
+<p>def decoder(TypeInfo[], _format, default, binary) do
   default.(binary)
-end
+end</p>
 
-def encoder(TypeInfo[sender: &quot;json&quot;], _default, value) do
+<p>def encoder(TypeInfo[sender: &quot;json&quot;], _default, value) do
   JSON.encode(value)
-end
+end</p>
 
-def encoder(TypeInfo[], default, value) do
+<p>def encoder(TypeInfo[], default, value) do
   default.(value)
-end
+end</p>
 
-def formatter(TypeInfo[sender: &quot;json&quot;]) do
+<p>def formatter(TypeInfo[sender: &quot;json&quot;]) do
   :text
-end
+end</p>
 
-def formatter(TypeInfo[]) do
+<p>def formatter(TypeInfo[]) do
   nil
 end
-</code></pre>
+```</p>
 
 <h2>TODO</h2>
 
@@ -124,16 +127,18 @@ end
 
 <p>To contribute you need to compile Postgrex from source and test it:</p>
 
-<pre class="codeblock"><code>$ git clone https://github.com/ericmj/postgrex.git
+<p><code>
+$ git clone https://github.com/ericmj/postgrex.git
 $ cd postgrex
 $ mix test
-</code></pre>
+</code></p>
 
 <p>The tests requires some modifications to your <a href="http://www.postgresql.org/docs/9.3/static/auth-pg-hba-conf.html">hba file</a>. The path to it can be found by running <code>$ psql -U postgres -c &quot;SHOW hba_file&quot;</code> in your shell. Put the following above all other configurations (so that they override):</p>
 
-<pre class="codeblock"><code>host    all             postgrex_md5_pw         127.0.0.1/32    md5
+<p><code>
+host    all             postgrex_md5_pw         127.0.0.1/32    md5
 host    all             postgrex_cleartext_pw   127.0.0.1/32    password
-</code></pre>
+</code></p>
 
 <p>The server needs to be restarted for the changes to take effect. Additionally you need to setup a Postgres user with the same username as the local user and give it trust or ident in your hba file. Or you can export $PGUSER and $PGPASS before running tests.</p>
 
