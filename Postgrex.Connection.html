@@ -20,7 +20,7 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">Postgrex v0.5.2 &rarr; <a href="overview.html">Overview</a> &rarr; Postgrex &rarr; <a href="Postgrex.Connection.html">Connection</a></div>
+      <div class="breadcrumbs">Postgrex v0.5.3 &rarr; <a href="overview.html">Overview</a> &rarr; Postgrex &rarr; <a href="Postgrex.Connection.html">Connection</a></div>
 
       <h1>
         Postgrex.Connection
@@ -47,7 +47,7 @@
       
 
       
-        <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+        <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L1" class="view_source">Source</a>
       
 
@@ -204,7 +204,7 @@ Postgrex.Connection.commit(pid)
 </code></pre>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L136" class="view_source">Source</a>
   
 </div>
@@ -229,7 +229,7 @@ Postgrex.Connection.commit(pid)
 <a href="Postgrex.Error.html"><code>Postgrex.Error</code></a> if an error occurred. See <code>begin/1</code>.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L149" class="view_source">Source</a>
   
 </div>
@@ -254,7 +254,7 @@ Postgrex.Connection.commit(pid)
 error occurred. See <code>begin/1</code> for more information.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L190" class="view_source">Source</a>
   
 </div>
@@ -279,7 +279,7 @@ error occurred. See <code>begin/1</code> for more information.</p>
 <a href="Postgrex.Error.html"><code>Postgrex.Error</code></a> if an error occurred. See <code>commit/1</code>.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L204" class="view_source">Source</a>
   
 </div>
@@ -316,7 +316,7 @@ makes.</li>
 </ul>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L228" class="view_source">Source</a>
   
 </div>
@@ -340,7 +340,7 @@ makes.</li>
   <div class="docstring"><p>Returns a cached map of connection parameters.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L108" class="view_source">Source</a>
   
 </div>
@@ -357,7 +357,7 @@ makes.</li>
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>query(pid, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, [], timeout) :: {:ok, <a href="Postgrex.Result.html#t:t/0">Postgrex.Result.t</a>} | {:error, <a href="Postgrex.Error.html#t:t/0">Postgrex.Error.t</a>}</li>
+        <li>query(pid, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, list, timeout) :: {:ok, <a href="Postgrex.Result.html#t:t/0">Postgrex.Result.t</a>} | {:error, <a href="Postgrex.Error.html#t:t/0">Postgrex.Error.t</a>}</li>
       
     </ul>
   
@@ -369,7 +369,7 @@ encodes and decodes elixir values by default. See <a href="Postgrex.Result.html"
 result data.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L81" class="view_source">Source</a>
   
 </div>
@@ -386,7 +386,7 @@ result data.</p>
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>query!(pid, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, [], timeout) :: <a href="Postgrex.Result.html#t:t/0">Postgrex.Result.t</a> | no_return</li>
+        <li>query!(pid, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, list, timeout) :: <a href="Postgrex.Result.html#t:t/0">Postgrex.Result.t</a> | no_return</li>
       
     </ul>
   
@@ -394,7 +394,7 @@ result data.</p>
 there was an error. See <code>query/3</code>.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L95" class="view_source">Source</a>
   
 </div>
@@ -419,7 +419,7 @@ there was an error. See <code>query/3</code>.</p>
 an error occurred. See <code>begin/1</code> for more information.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L162" class="view_source">Source</a>
   
 </div>
@@ -444,7 +444,7 @@ an error occurred. See <code>begin/1</code> for more information.</p>
 <a href="Postgrex.Error.html"><code>Postgrex.Error</code></a> if an error occurred. See <code>rollback/1</code>.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L176" class="view_source">Source</a>
   
 </div>
@@ -474,7 +474,7 @@ an error occurred. See <code>begin/1</code> for more information.</p>
 <li><code>:port</code> - Server port (default: 5432);</li>
 <li><code>:database</code> - Database (required);</li>
 <li><code>:username</code> - Username (default: PGUSER env variable, then USER env var);</li>
-<li><code>:password</code> - User password;</li>
+<li><code>:password</code> - User password (default PGPASSWORD);</li>
 <li><code>:encoder</code> - Custom encoder function;</li>
 <li><code>:decoder</code> - Custom decoder function;</li>
 <li><code>:formatter</code> - Function deciding the format for a type;</li>
@@ -495,7 +495,7 @@ an error occurred. See <code>begin/1</code> for more information.</p>
 </code></pre>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L44" class="view_source">Source</a>
   
 </div>
@@ -519,7 +519,7 @@ an error occurred. See <code>begin/1</code> for more information.</p>
   <div class="docstring"><p>Stop the process and disconnect.</p>
 </div>
   
-    <a href="https://github.com/ericmj/postgrex/blob/7b500e9f06c3d1efc8516fa6c6e98079fce5044c
+    <a href="https://github.com/ericmj/postgrex/blob/33963c3d768e3ba8d0fcce2094cb99e941414b2a
 /lib/postgrex/connection.ex#L66" class="view_source">Source</a>
   
 </div>
