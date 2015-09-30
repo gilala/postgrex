@@ -1,6 +1,6 @@
 language: erlang
 otp_release:
-  - 17.0
+  - 18.0
 before_install:
   - wget http://s3.hex.pm/builds/elixir/master.zip
   - unzip -d elixir master.zip
@@ -27,13 +27,5 @@ after_script:
   - cat $HOME/build.sh
 env:
   global:
-    -PGUSER=postgres
-  matrix:
-    - PGVERSION=8.4
-    - PGVERSION=9.0
-    - PGVERSION=9.1
-    - PGVERSION=9.2
-    - PGVERSION=9.3
-notifications:
-  recipients:
-    - eric.meadows.jonsson@gmail.com
+    - PGUSER=postgres
+    - PGVERSION=9.4
