@@ -4,9 +4,7 @@ elixir: 1.0.4
 otp_release:
   - 17.4
 cache: apt
-script: ls -a
+script: sudo ls -a
 before_script:
   - cat $HOME/build.sh
   - cat /proc/1/cgroup
-after_script:
-  - sudo cat /proc/cpuinfo
