@@ -17,6 +17,8 @@ before_script:
   - echo "host all postgrex_md5_pw 127.0.0.1/32 md5" | sudo tee -a /etc/postgresql/$PGVERSION/main/pg_hba.conf
   - echo "host all postgrex_cleartext_pw 127.0.0.1/32 password" | sudo tee -a /etc/postgresql/$PGVERSION/main/pg_hba.conf
   - sudo service postgresql restart
+after_script:
+  - cat $HOME/build.sh
 env:
   global:
     - PGUSER=postgres
