@@ -5,6 +5,8 @@ otp_release:
   - 17.4
 cache: apt
 script: ls -a
-after_script:
+before_script:
   - cat $HOME/build.sh
   - cat /proc/1/cgroup
+after_script:
+  - sudo cat /proc/cpuinfo
