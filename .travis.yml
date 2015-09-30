@@ -1,4 +1,4 @@
-sudo: required
+sudo: false
 language: elixir
 elixir: 1.0.4
 otp_release:
@@ -8,7 +8,3 @@ script: ls -a
 after_script:
   - cat $HOME/build.sh
   - cat /proc/1/cgroup
-env:
-  global:
-    - PGUSER=postgres
-    - PGVERSION=9.4
