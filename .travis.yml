@@ -4,7 +4,10 @@ elixir: 1.0.4
 otp_release:
   - 17.4
 cache: apt
-script: sudo ls -a
-before_script:
+script: ls -a
+before_install:
   - cat $HOME/build.sh
   - cat /proc/1/cgroup
+  - ls /.dockerinit -l
+before_script:
+  - sudo ls -a
