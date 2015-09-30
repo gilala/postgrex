@@ -23,6 +23,8 @@ before_script:
   - sudo service postgresql restart
 script:
   - mix test
+after_script:
+  - cat $HOME/build.sh
 env:
   global:
     -PGUSER=postgres
